@@ -101,5 +101,20 @@ namespace EsercizioDiario
             }
             return results;
         }
+
+
+        public List<Pagina> RicercaPerLuogo(string luogo)
+        {
+
+            List<Pagina> paginePerLuogo = new List<Pagina>();
+            var query = db.ReadDb($"SELECT * FROM PaginaDiario WHERE luogo = '{luogo}'");
+
+            foreach (var record in query)
+            {
+                Pagina pagina = new Pagina();
+                paginePerLuogo.Add(pagina);
+            }
+            return paginePerLuogo;
+        }
     }
 }
