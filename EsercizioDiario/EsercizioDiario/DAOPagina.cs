@@ -100,8 +100,8 @@ namespace EsercizioDiario
                            $" coordinataX = {((Pagina)entity).CoordinataX}, " +
                            $" coordinataY = {((Pagina)entity).CoordinataY}, " +
                            $" luogo = '{((Pagina)entity).Luogo.Replace("'", "''")}', " +
-                           $" descrizione = '{((Pagina)entity).Descrizione.Replace("'", "''")}') "; 
-            
+                           $" descrizione = '{((Pagina)entity).Descrizione.Replace("'", "''")}') ";
+
             var command = new SqlCommand(query);
             return db.UpdateDb(command);
         }
@@ -123,6 +123,21 @@ namespace EsercizioDiario
                 }
             }
             return results;
+        }
+
+
+        public List<Pagina> RicercaPerLuogo(string luogo)
+        {
+
+            List<Pagina> paginePerLuogo = new List<Pagina>();
+            var query = db.ReadDb($"SELECT * FROM PaginaDiario WHERE luogo = '{luogo}'");
+
+            foreach (var record in query)
+            {
+                Pagina pagina = new Pagina();
+                paginePerLuogo.Add(pagina);
+            }
+            return paginePerLuogo;
         }
     }
 }
