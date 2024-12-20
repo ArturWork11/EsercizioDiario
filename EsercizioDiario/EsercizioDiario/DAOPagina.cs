@@ -105,5 +105,24 @@ namespace EsercizioDiario
             var command = new SqlCommand(query);
             return db.UpdateDb(command);
         }
+        public List<Pagina> RicercaPerTempo(DateTime startDate, DateTime endDate)
+        {
+            List<Pagina> results = new List<Pagina>();
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM PaginaDiario WHERE dataGiorno BETWEEN @startDate AND @endDate");
+                cmd.Parameters.AddWithValue("@startDate", startDate);
+                cmd.Parameters.AddWithValue("@endDate", endDate);
+                var data = db.ReadDb(cmd); if (data != null)
+                {
+                    foreach (var row in data)
+                    {
+                        Pagina entry = new Pagina();
+                        entry.FromDictionary(row);
+                        results.Add(entry);
+                    }
+                }
+            }
+            return results;
+        }
     }
 }
