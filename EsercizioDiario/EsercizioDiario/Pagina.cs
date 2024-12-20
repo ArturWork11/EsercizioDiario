@@ -19,7 +19,7 @@ namespace EsercizioDiario
 
         public override string ToString()
         {
-            return base.ToString() + $"Data Giorno: {DataGiorno} \nCoordinata X: {CoordinataX} \nCoordinata Y: {CoordinataY} \nLuogo: {Luogo} \nDescrizione: {Descrizione}\n";
+            return base.ToString() + $"Data Giorno: {DataGiorno.ToShortDateString()} \nCoordinata X: {CoordinataX} \nCoordinata Y: {CoordinataY} \nLuogo: {Luogo} \nDescrizione: {Descrizione}\n";
         }
 
     }

@@ -56,18 +56,20 @@ namespace EsercizioDiario
         public List<Entity> GetRecords()
         {
             List<Entity> ris = new();
-            string query = "SELECT * FROM Prodotti;";
+            string query = "SELECT * FROM PaginaDiario;";
             var command = new SqlCommand(query);
-
             var righe = db.ReadDb(command);
 
             foreach (var r in righe)
             {
-                Entity e = new Pagina();
-                e.FromDictionary(r);
-                ris.Add(e);
+                if (r.Count > 0) 
+                {
+                    Entity e = new Pagina();
+                    e.FromDictionary(r);
+                    ris.Add(e);
+                }
             }
-            return ris; ;
+            return ris;
         }
 
         public bool UpdateRecord(Entity entity)
