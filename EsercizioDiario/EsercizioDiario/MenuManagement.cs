@@ -7,7 +7,7 @@ using Utility;
 
 namespace EsercizioDiario
 {
-    internal class MenuManagment
+    internal class MenuManagement
     {
         private static DAOPagina daoPagina = DAOPagina.GetInstance();
         private static void GetAllPages()
