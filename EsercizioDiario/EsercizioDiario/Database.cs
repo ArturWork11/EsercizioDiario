@@ -211,6 +211,16 @@ namespace Utility
             }
         }
 
+        public Dictionary<string, string> ReadOneDb()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateDb()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
