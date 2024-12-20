@@ -48,9 +48,9 @@ namespace EsercizioDiario
             var ris = db.ReadOneDb(query);
 
             if (ris == null) return null;
-                Pagina e = new Pagina();
-                e.FromDictionary(ris);
-                return e;
+            Pagina e = new Pagina();
+            e.FromDictionary(ris);
+            return e;
         }
 
         public List<Entity> GetRecords()
@@ -78,8 +78,8 @@ namespace EsercizioDiario
                            $" coordinataX = {pagina.CoordinataX}, " +
                            $" coordinataY = {pagina.CoordinataY}, " +
                            $" luogo = '{pagina.Luogo.Replace("'", "''")}', " +
-                           $" descrizione = '{pagina.Descrizione.Replace("'", "''")}') "; 
-            
+                           $" descrizione = '{pagina.Descrizione.Replace("'", "''")}') ";
+
             return db.UpdateDb(query);
         }
         public List<Pagina> RicercaPerTempo(DateTime startDate, DateTime endDate)
@@ -115,6 +115,25 @@ namespace EsercizioDiario
                 paginePerLuogo.Add(pagina);
             }
             return paginePerLuogo;
+        }
+        public List<Pagina> SearchByDescription(string description)
+        {
+            List<Pagina> results = new List<Pagina>();
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM PaginaDiario WHERE descrizione LIKE @description");
+                cmd.Parameters.AddWithValue("@description", "%" + description + "%");
+                var data = db.ReadDb(cmd);
+                if (data != null)
+                {
+                    foreach (var row in data)
+                    {
+                        Pagina entry = new Pagina();
+                        entry.FromDictionary(row);
+                        results.Add(entry);
+                    }
+                }
+            }
+            return results;
         }
     }
 }
