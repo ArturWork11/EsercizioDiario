@@ -46,6 +46,7 @@ namespace Utility
         /// associando i nomi delle colonne ai rispettivi valori. Restituisce null se non viene trovata alcuna riga.
         /// </returns>
         Dictionary<string, string>? ReadOneDb(SqlCommand command);
+        Dictionary<string, string> ReadOneDb();
 
         #endregion
 
@@ -57,6 +58,7 @@ namespace Utility
         /// <param name="command">Il comando SQL da eseguire.</param>
         /// <returns>True se l'operazione è andata a buon fine, altrimenti False.</returns>
         bool UpdateDb(SqlCommand command);
+        bool UpdateDb();
 
         #endregion
     }
