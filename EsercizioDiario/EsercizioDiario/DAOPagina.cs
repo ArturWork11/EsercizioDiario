@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utility;
+﻿using Utility;
 using Microsoft.Data.SqlClient;
 
 namespace EsercizioDiario
@@ -26,54 +21,36 @@ namespace EsercizioDiario
             return instance;
         }
         #endregion
-
         public bool CreateRecord(Entity entity)
         {
             Pagina pagina = (Pagina)entity;
             string query = "INSERT INTO PaginaDiario (dataGiorno,coordinataX," +
                             "coordinataY,luogo,descrizione) " +
                             "VALUES " +
-                            $"('{((Pagina)entity).DataGiorno.ToString("yyyy-MM-dd")}', " +
-                            $"  {((Pagina)entity).CoordinataX}, " +
-                            $"  {((Pagina)entity).CoordinataY}, " +
-                            $" '{((Pagina)entity).Luogo.Replace("'", "''")}', " +
-                            $" '{((Pagina)entity).Descrizione.Replace("'", "''")}')";
+                            $"('{pagina.DataGiorno.ToString("yyyy-MM-dd")}', " +
+                            $"  {pagina.CoordinataX}, " +
+                            $"  {pagina.CoordinataY}, " +
+                            $" '{pagina.Luogo.Replace("'", "''")}', " +
+                            $" '{pagina.Descrizione.Replace("'", "''")}')";
 
-            var command = new SqlCommand(query);
-            return db.UpdateDb(command);
+            return db.UpdateDb(query);
         }
 
         public bool DeleteRecord(int recordId)
         {
-            string query = $"SELECT * FROM Prodotti WHERE id = {recordId};";
+            string query = $"DELETE FROM PaginaDiario WHERE id = {recordId};";
             return db.UpdateDb(query);
-            // return db.UpdateDb($"DELETE FROM PaginaDiario WHERE id = {recordId};");
         }
 
         public Entity? FindRecord(int recordId)
         {
-            string query = $"SELECT * FROM Prodotti WHERE id = {recordId};";
+            string query = $"SELECT * FROM PaginaDiario WHERE id = {recordId};";
             var ris = db.ReadOneDb(query);
 
-            if (ris != null)
-            {
+            if (ris == null) return null;
                 Pagina e = new Pagina();
                 e.FromDictionary(ris);
                 return e;
-            }
-            else
-                return null;
-
-            //var row = db.ReadOneDb($"SELECT * FROM PaginaDiario WHERE id = {recordId};");
-            //if (row == null)
-            //{
-            //    Entity? e = new Pagina();
-            //    e.FromDictionary(row);
-
-            //    return e;
-            //}
-            //else
-            //    return null;
         }
 
         public List<Entity> GetRecords()
@@ -95,15 +72,15 @@ namespace EsercizioDiario
 
         public bool UpdateRecord(Entity entity)
         {
-            string query = "UPDATE Prodotti SET " +
-                           $"(dataGiorno = '{((Pagina)entity).DataGiorno.ToString("yyyy-MM-dd")}', " +
-                           $" coordinataX = {((Pagina)entity).CoordinataX}, " +
-                           $" coordinataY = {((Pagina)entity).CoordinataY}, " +
-                           $" luogo = '{((Pagina)entity).Luogo.Replace("'", "''")}', " +
-                           $" descrizione = '{((Pagina)entity).Descrizione.Replace("'", "''")}') "; 
+            Pagina pagina = (Pagina)entity;
+            string query = "UPDATE PaginaDiario SET " +
+                           $"(dataGiorno = '{pagina.DataGiorno.ToString("yyyy-MM-dd")}', " +
+                           $" coordinataX = {pagina.CoordinataX}, " +
+                           $" coordinataY = {pagina.CoordinataY}, " +
+                           $" luogo = '{pagina.Luogo.Replace("'", "''")}', " +
+                           $" descrizione = '{pagina.Descrizione.Replace("'", "''")}') "; 
             
-            var command = new SqlCommand(query);
-            return db.UpdateDb(command);
+            return db.UpdateDb(query);
         }
         public List<Pagina> RicercaPerTempo(DateTime startDate, DateTime endDate)
         {
