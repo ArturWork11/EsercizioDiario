@@ -139,5 +139,27 @@ namespace EsercizioDiario
             }
             return paginePerLuogo;
         }
+
+        public List<Pagina> RicercaPerDescrizione(string keyWords)
+        {
+            List<string> words = new();
+            words = keyWords.Split(" ");
+            var ans = new List<Pagina>();
+
+            var rows = db.ReadDb("SELECT * FROM PaginaDiario")
+
+                foreach (var row in rows)
+            {
+                Pagina p = new();
+                p.FromDictionary(row);
+
+                foreach (string s in words)
+                {
+                    if (p.Descrizione.Contains(s))
+                        ans.Add(p);
+                }
+            }
+        }
+
     }
 }
